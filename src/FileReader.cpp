@@ -5,43 +5,39 @@ FileReader::FileReader(std::string path){
 }
 
 void FileReader::ReadFile(){
-    std::cout<<"inside file reader \n";
     std::string token;
     std::ifstream file(FilePath);
     std::string str;
     int index = 0;
     int cellCount = 0;
+
+    CentralNodeList* centralNodeList = new CentralNodeList();
+    CentralNode* centralNode;
+    NodeList* tempUpperNodeList;
+    NodeList* tempLowerNodeList;
+
     while (std::getline(file, token)) 
     {
-        std::cout<<"Reading line \n";
         // each loop is a line
-        CentralNode* centralNode = new CentralNode();
+        centralNode = new CentralNode();
 
         std::istringstream ss(token);
         while (std::getline(ss, str, ' ')) 
         {
-            // breaking lines by space
-            // Node* upNode = new Node(GetFirstDigit(stoi(str)));
-            // Node* downNode = new Node(GetSecondDigit(stoi(str)));
-            std::cout<<"Reading number \n";
-
             centralNode->AddNodeToUpperList(GetFirstDigit(stoi(str)));
             centralNode->AddNodeToLowerList(GetSecondDigit(stoi(str)));
         }
 
-        this->Central->AddCentralNode(centralNode);
+        centralNodeList->AddCentralNode(centralNode);
     }
 
-    Central->Print();
-    std::cout<<"Closing file \n";
+    Central = centralNodeList;
     file.close();
-    std::cout<<"Done \n";
 }
 
 CentralNodeList* FileReader::GetCentralNodeList(){
    
     ReadFile();
-    std::cout<<"Returning central \n";
 
     return this->Central;
 }

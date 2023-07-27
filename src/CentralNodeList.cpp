@@ -3,11 +3,18 @@
 
 CentralNodeList::CentralNodeList(){
     this->Size = 0;
+    this->LongestNodeListSize = 0;
     this->Head = nullptr;
     this->Tail = nullptr;
 }
 
 void CentralNodeList::AddCentralNode(CentralNode* node){
+
+    int nodeListSize = node->GetUpperList()->GetSize();
+
+    if(nodeListSize > LongestNodeListSize){
+        LongestNodeListSize = nodeListSize;
+    }
 
     if(Size == 0){
         Head = node;
@@ -25,12 +32,50 @@ void CentralNodeList::AddCentralNode(CentralNode* node){
 }
 
 float CentralNodeList::GetUpperAverage(){
-    return 0.0;
+    float totalSumAverage = 0.0;
+    float rowSumAverage = 0.0;
+    int sizeToBeUsed = 0;
+    for(int currentIndex = 0; currentIndex < LongestNodeListSize; currentIndex++){
+        sizeToBeUsed = Size;
+        rowSumAverage = 0.0;
+        for(CentralNode* temp = this->Head; temp != nullptr; temp = temp->GetNextNode()){
+            int nodeValue = temp->GetUpperList()->GetNodeValueAtIndex(currentIndex);
+
+            if(nodeValue == -999){
+                sizeToBeUsed--;
+                continue;
+            }
+
+            rowSumAverage += nodeValue;
+        }
+   
+        totalSumAverage += (float)rowSumAverage/(float)sizeToBeUsed;
+    }
+    
+    return totalSumAverage;
 }
 
 float CentralNodeList::GetLowerAverage(){
-    return 0.0;
-}
+float totalSumAverage = 0.0;
+    float rowSumAverage = 0.0;
+    int sizeToBeUsed = 0;
+    for(int currentIndex = 0; currentIndex < LongestNodeListSize; currentIndex++){
+        sizeToBeUsed = Size;
+        rowSumAverage = 0.0;
+        for(CentralNode* temp = this->Head; temp != nullptr; temp = temp->GetNextNode()){
+            int nodeValue = temp->GetLowerList()->GetNodeValueAtIndex(currentIndex);
+
+            if(nodeValue == -999){
+                sizeToBeUsed--;
+                continue;
+            }
+
+            rowSumAverage += nodeValue;
+        }
+        totalSumAverage += (float)rowSumAverage/(float)sizeToBeUsed;
+    }
+    
+    return totalSumAverage;}
 
 void CentralNodeList::SwapNodeLists(int upperPosition, int lowerPosition){
     // swap the upper node list of the central node at 'upperPosition' with the lower node list of  central node at 'lowerPosition'
@@ -63,6 +108,15 @@ CentralNode* CentralNodeList::GetCentralNodeAtIndex(int index){
 
     std::cout<<"No node matches \n";
     return nullptr;
+}
+
+int CentralNodeList::GetSize(){
+    return Size;
+}
+
+
+int CentralNodeList::GetLongestNodeListSize(){
+    return LongestNodeListSize;
 }
 
 CentralNodeList::~CentralNodeList(){

@@ -10,6 +10,7 @@ class CentralNodeList{
         CentralNode* Tail;
         CentralNode** CentralNodes;
         int Size;
+        int LongestNodeListSize;
 
     public:
         CentralNodeList();
@@ -19,6 +20,8 @@ class CentralNodeList{
         CentralNode* GetCentralNodeAtIndex(int index);
         void SwapNodeLists(int upperPosition, int lowerPosition);
         void Print();
+        int GetSize();
+        int GetLongestNodeListSize();
         ~CentralNodeList();
 };
 

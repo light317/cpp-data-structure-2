@@ -37,7 +37,7 @@ void NodeList::AddNode(const int value){
 int NodeList::GetNodeValueAtIndex(int index){
     Node* temp = GetNodeAtIndex(index);
     if(temp == nullptr)
-        throw "Invalid index";
+        return -999;
     
     return temp->GetValue();
 }

@@ -4,6 +4,7 @@
 CentralNode::CentralNode(){
     UpperList = new NodeList();
     LowerList = new NodeList();
+    Next = nullptr;
 }
 
 void CentralNode::SetUpperList(NodeList* nodeList){
